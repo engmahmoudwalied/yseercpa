@@ -1,26 +1,46 @@
 "use client"
 
-import Link from "next/link"
-import { ArrowLeft, BadgeCheck, Check, FileCheck2, ShieldCheck, Users } from "lucide-react"
-import { ContactForm, SectionHeading, ServiceGrid } from "@/components/site"
-import { tx, useLanguage } from "@/components/language-provider"
-import { localizedHref } from "@/lib/seo"
-
-const values = [
-  ["الاستقلالية المهنية", "Professional independence"], ["الحياد والموضوعية", "Impartiality and objectivity"], ["النزاهة والدقة", "Integrity and accuracy"], ["قيمة مستدامة", "Sustainable value"], ["جودة الأداء", "Quality in every engagement"], ["التطوير المستمر", "Continuous improvement"], ["الثقة طويلة الأمد", "Long-term trust"],
-]
+import {
+  HeroSection,
+  StatsStrip,
+  AboutSection,
+  StandardsSection,
+  ServicesSection,
+  WhySection,
+  PartnersSection,
+  ContactSection,
+  FloatingChat,
+} from "@/components/site"
 
 export default function HomePage() {
-  const { language } = useLanguage()
-  const t = (ar: string, en: string) => tx(language, ar, en)
-  return <main>
-    <section className="hero"><div className="container hero-content"><div className="hero-copy"><span className="eyebrow"><i/> {t("يسير للاستشارات المهنية", "Yseer Professional Consulting")}</span><h1>{t("وضوحٌ في الأرقام،", "Clarity in numbers,")}<br/><em>{t("وثقةٌ في كل قرار.", "confidence in every decision.")}</em></h1><p>{t("شريكك المهني في المراجعة والاستشارات المالية والزكوية والضريبية. نرتب التفاصيل لتتخذ قراراتك بثقة.", "Your trusted partner for audit, financial, Zakat and tax advisory. We bring clarity to the details so you can make decisions with confidence.")}</p><div className="hero-actions"><Link className="button button-primary" href="#contact">{t("تواصل معنا", "Get in touch")} <ArrowLeft size={18}/></Link><Link className="hero-link" href="#services">{t("تعرّف على خدماتنا", "Explore our services")} <ArrowLeft size={17}/></Link></div><div className="hero-proof"><span><ShieldCheck size={17}/> {t("استقلالية مهنية", "Independent advice")}</span><span><BadgeCheck size={17}/> {t("معايير مهنية", "Professional standards")}</span><span><Check size={17}/> {t("دقة وموثوقية", "Accuracy you can trust")}</span></div></div><div className="hero-note"><span className="note-icon"><FileCheck2 size={21}/></span><div><small>{t("يسير للاستشارات المهنية", "Yseer Professional Consulting")}</small><strong>{t("خبرة قريبة من واقعك", "Expertise grounded in your reality")}</strong></div></div></div></section>
-    <section className="intro-section" id="about"><div className="container intro-grid"><div><span className="eyebrow"><i/> {t("عن يسير", "About Yseer")}</span><h2 className="display-heading">{t("خبرة مهنية،", "Professional expertise,")}<br/><span>{t("قريبة من واقعك.", "close to your business.")}</span></h2></div><div className="intro-copy"><p>{t("نقدم خدمات المراجعة والاستشارات المالية والزكوية والضريبية للمنشآت. نعمل على تعزيز الامتثال ورفع جودة التقارير، ونقدّم فهمًا يساعد أصحاب الأعمال على اتخاذ قرارات مدروسة.", "We provide audit, financial, Zakat and tax advisory services to organizations. By strengthening compliance and reporting quality, we help business leaders make informed decisions.")}</p><Link className="text-link" href={localizedHref("/من-نحن", language)}>{t("اقرأ المزيد عن يسير", "Discover Yseer")} <ArrowLeft size={17}/></Link><div className="intro-stamp" aria-hidden="true"><span>{t("يسير للاستشارات", "Yseer Consulting")}</span><strong>{t("وضوح", "Clarity")}<br/>{t("يثق به", "you can trust")}</strong><small>{t("من بريدة", "Based in Buraydah")}</small></div></div></div></section>
-    <section className="services-section" id="services"><div className="container"><div className="section-top"><SectionHeading eyebrow={t("خدماتنا", "Our services")} title={t("خدمات مهنية متكاملة.", "Integrated professional services.")} description={t("حلول عملية تساعد منشأتك على بناء أساس مالي متين والامتثال والنمو بثقة.", "Practical solutions to strengthen your financial foundations, support compliance and grow with confidence.")}/><Link className="button button-outline" href={localizedHref("/خدماتنا", language)}>{t("تفاصيل الخدمات", "All services")} <ArrowLeft size={17}/></Link></div><ServiceGrid/></div></section>
-    <section className="values-section"><div className="container values-grid"><div className="values-intro"><span className="eyebrow eyebrow-light"><i/> {t("مبادئنا المهنية", "Our principles")}</span><h2>{t("قيم نلتزم بها", "Values we stand by")}<br/><span>{t("في كل خطوة.", "at every step.")}</span></h2><p>{t("نلتزم بمبادئ واضحة في كل علاقة وكل تقرير؛ لتكون يسير شريكًا مهنيًا يعتمد عليه.", "Clear principles guide every relationship and every report—making Yseer a professional partner you can rely on.")}</p><Link className="text-link text-link-light" href={localizedHref("/من-نحن", language)}>{t("رؤيتنا ورسالتنا", "Our vision and mission")} <ArrowLeft size={17}/></Link></div><div className="values-list">{values.map(([ar, en], index) => <div className="value-row" key={ar}><span>0{index + 1}</span><strong>{t(ar, en)}</strong><Check size={17}/></div>)}</div></div></section>
-    <section className="why-section"><div className="container why-grid"><div className="why-art" aria-hidden="true"><div className="art-ring ring-one"/><div className="art-ring ring-two"/><div className="art-core"><span>{t("يسير", "YSEER")}</span><strong>{t("وضوح", "Clarity")}<br/>{t("يثق به", "you can trust")}</strong></div><span className="art-label">FINANCIAL CLARITY · QASSIM</span></div><div className="why-copy"><span className="eyebrow"><i/> {t("لماذا يسير؟", "Why Yseer?")}</span><h2 className="display-heading">{t("نرتّب التفاصيل،", "We bring order to the details,")}<br/><span>{t("لتكبر الصورة.", "so you can see the bigger picture.")}</span></h2><p>{t("نجمع بين الخبرة المهنية وفهم واقع المنشآت، ونحوّل التعقيد إلى خطوات واضحة وتوصيات عملية تسند قراراتك.", "We combine professional expertise with a practical understanding of business to turn complexity into clear steps and actionable recommendations.")}</p><div className="why-points"><span><Check size={17}/> {t("تواصل مباشر وواضح", "Clear, direct communication")}</span><span><Check size={17}/> {t("توصيات عملية", "Practical recommendations")}</span><span><Check size={17}/> {t("سرية واستقلالية مهنية", "Confidentiality and independence")}</span></div></div></div></section>
-    <section className="partners-section" id="partners"><div className="container"><div className="partners-head"><SectionHeading eyebrow={t("شركاؤنا", "Our partners")} title={t("الثقة تُبنى معًا.", "Trust is built together.")} description={t("نعتز بعلاقات مهنية قائمة على الوضوح والالتزام وتحقيق أثر يدوم.", "We value professional relationships grounded in clarity, commitment and lasting impact.")}/><Link className="text-link" href={localizedHref("/شركاؤنا", language)}>{t("المزيد عن الشراكات", "More about our partnerships")} <ArrowLeft size={17}/></Link></div><div className="partner-categories"><article className="partner-category"><span><Users size={22}/></span><h3>{t("منشآت نامية", "Growing businesses")}</h3><p>{t("مساندة المنظومات المالية في مراحل النمو المختلفة.", "Financial guidance for businesses at every stage of growth.")}</p></article><article className="partner-category"><span><FileCheck2 size={22}/></span><h3>{t("جهات مهنية", "Professional firms")}</h3><p>{t("تعاون مبني على جودة العمل والالتزام بالمعايير.", "Collaboration built on quality and professional standards.")}</p></article><article className="partner-category"><span><BadgeCheck size={22}/></span><h3>{t("قطاعات متنوعة", "Diverse industries")}</h3><p>{t("حلول مرنة تراعي اختلاف احتياجات الأعمال.", "Flexible solutions tailored to the needs of each business.")}</p></article></div></div></section>
-    <section className="career-section"><div className="container career-banner"><div><span className="eyebrow"><i/> {t("انضم إلى فريق يسير", "Join the Yseer team")}</span><h2>{t("مسيرتك المهنية تبدأ من هنا.", "Your career starts here.")}</h2><p>{t("نبحث عن كفاءات طموحة تسهم في تطوير مستقبل المحاسبة والاستشارات.", "We are looking for ambitious professionals ready to help shape the future of accounting and consulting.")}</p></div><Link className="button button-primary" href={localizedHref("/توظيف", language)}>{t("الفرص الوظيفية", "Explore careers")} <ArrowLeft size={17}/></Link></div></section>
-    <section className="contact-section" id="contact"><div className="container contact-grid"><div className="contact-copy"><span className="eyebrow eyebrow-light"><i/> {t("تواصل معنا", "Contact us")}</span><h2>{t("خلّنا نوضح", "Let’s bring clarity")}<br/>{t("الصورة سوا.", "to your next step.")}</h2><p>{t("شاركنا احتياجك، وفريق يسير يساعدك في تحديد الخطوة المناسبة لمنشأتك.", "Tell us what your business needs. Our team will help you identify the right next step.")}</p><div className="contact-direct"><a href="tel:920031899"><span><FileCheck2 size={18}/></span><div><small>{t("الرقم الموحد", "Unified number")}</small><strong dir="ltr">920031899</strong></div></a><a href="mailto:info@yseercpa.sa"><span><ArrowLeft size={18}/></span><div><small>{t("البريد الإلكتروني", "Email")}</small><strong>info@yseercpa.sa</strong></div></a></div><span className="contact-hours">{t("الأحد – الخميس", "Sunday – Thursday")} <b/> {t("8:00 ص – 4:00 م", "8:00 AM – 4:00 PM")}</span></div><div className="contact-form-wrap"><div className="form-heading"><div><span className="eyebrow"><i/> {t("طلب استشارة", "Request a consultation")}</span><h3>{t("ما الذي تحتاجه؟", "How can we help?")}</h3></div><FileCheck2 size={22}/></div><ContactForm/></div></div></section>
-  </main>
+  return (
+    <main className="relative overflow-hidden">
+      {/* 1. Hero with headline "نجاح أعمالك يبدأ من وضوح أرقامك" and geometric emblem */}
+      <HeroSection />
+
+      {/* 2. Stats & metrics bar: 200+ تقارير مهنية, 100+ عميل وشريك, etc. */}
+      <StatsStrip />
+
+      {/* 3. About Us ("عن يسير") with Vision, Mission, and profile visual */}
+      <AboutSection />
+
+      {/* 4. Standards ("معاييرنا") 1 through 7 */}
+      <StandardsSection />
+
+      {/* 5. Services ("خدماتنا") 8 cards with icons and exact copy */}
+      <ServicesSection />
+
+      {/* 6. Why Yseer ("لماذا يسير؟") with quotation mark */}
+      <WhySection />
+
+      {/* 7. Partners in success ("شركاؤنا في النجاح") carousel */}
+      <PartnersSection />
+
+      {/* 8. Contact Us ("تواصل معنا") with quote form and location map */}
+      <ContactSection />
+
+      {/* 9. Floating WhatsApp chat button */}
+      <FloatingChat />
+    </main>
+  )
 }
