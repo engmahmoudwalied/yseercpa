@@ -2,7 +2,9 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
+import { localizedHref } from "@/lib/seo"
 import {
   ArrowLeft,
   ArrowRight,
@@ -46,15 +48,16 @@ import {
   LogoLamshNorah,
   LogoAlTabtabaei,
   SaudiProfileGraphic,
+  OfficialWhatsAppIcon,
 } from "@/components/icons"
 
 export const navItems = [
   { label: "الرئيسية", labelEn: "Home", href: "/" },
-  { label: "عن يسير", labelEn: "About", href: "/#about" },
-  { label: "خدماتنا", labelEn: "Services", href: "/#services" },
-  { label: "شركاؤنا", labelEn: "Partners", href: "/#partners" },
+  { label: "عن يسير", labelEn: "About", href: "/من-نحن" },
+  { label: "خدماتنا", labelEn: "Services", href: "/خدماتنا" },
+  { label: "شركاؤنا", labelEn: "Partners", href: "/شركاؤنا" },
   { label: "التوظيف", labelEn: "Careers", href: "/توظيف" },
-  { label: "تواصل معنا", labelEn: "Contact", href: "/#contact" },
+  { label: "تواصل معنا", labelEn: "Contact", href: "/تواصل-معنا" },
 ]
 
 export const socialLinks = [
@@ -73,7 +76,7 @@ export const socialLinks = [
   {
     label: "واتساب",
     labelEn: "WhatsApp",
-    href: "https://iwtsp.com/966537177706",
+    href: "https://wa.me/966537177706",
     icon: ({ size = 16 }: { size?: number }) => (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/>
@@ -219,11 +222,55 @@ export const standardsData = [
   { num: "7", textAr: "نبني علاقات طويلة الأمد قائمة على الثقة", textEn: "Building long-term relationships grounded in mutual trust" },
 ]
 
+// Brand Logo that switches dynamically between Arabic and English
+export function BrandLogo({ language, isFooter = false }: { language: "ar" | "en"; isFooter?: boolean }) {
+  if (language === "ar") {
+    return (
+      <span className={`brand-arabic-lockup ${isFooter ? "brand-arabic-footer" : ""}`} dir="ltr">
+        <Image
+          className="brand-arabic-script"
+          src="/yseer-arabic-script.png"
+          alt="يسير للاستشارات المهنية"
+          width={105}
+          height={40}
+          priority
+        />
+        <Image
+          className="brand-english-symbol"
+          src="/yseer-mark.png"
+          alt="شعار يسير"
+          width={38}
+          height={34}
+          priority
+        />
+      </span>
+    )
+  }
+
+  return (
+    <span className={`brand-english ${isFooter ? "brand-english-footer" : ""}`} dir="ltr">
+      <Image
+        className="brand-english-symbol"
+        src="/yseer-mark.png"
+        alt="Yseer Symbol"
+        width={38}
+        height={34}
+        priority
+      />
+      <span className="brand-english-copy">
+        <strong>YSEER</strong>
+        <small>Professional Consulting</small>
+      </span>
+    </span>
+  )
+}
+
 // Site Header with responsive menu, social icons, language toggle, and theme switch
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [theme, setTheme] = useState<"light" | "dark">("light")
   const { language, toggleLanguage } = useLanguage()
+  const pathname = usePathname() || "/"
 
   useEffect(() => {
     const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -245,16 +292,10 @@ export function SiteHeader() {
       <div className="container header-inner">
         <Link
           className="brand"
-          href="/"
+          href={localizedHref("/", language)}
           aria-label={tx(language, "يسير للاستشارات المهنية - الصفحة الرئيسية", "Yseer Professional Consulting - Home")}
         >
-          <Image
-            src="/yseer-logo.png"
-            alt={tx(language, "يسير للاستشارات المهنية", "Yseer Professional Consulting")}
-            width={160}
-            height={60}
-            priority
-          />
+          <BrandLogo language={language} />
         </Link>
 
         {/* Social media icons on header as in screenshot */}
@@ -278,24 +319,33 @@ export function SiteHeader() {
           className={open ? "main-nav is-open" : "main-nav"}
           aria-label={tx(language, "القائمة الرئيسية", "Main navigation")}
         >
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={(event) => {
-                setOpen(false)
-                navigateToHomeSection(event, item.href)
-              }}
-            >
-              {tx(language, item.label, item.labelEn)}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const targetHref = localizedHref(item.href, language)
+            const isHome = item.href === "/"
+            const isActive = isHome
+              ? pathname === "/" || pathname === "/en"
+              : pathname === targetHref || pathname.startsWith(targetHref + "/")
+
+            return (
+              <Link
+                key={item.href}
+                href={targetHref}
+                className={isActive ? "is-active" : undefined}
+                onClick={(event) => {
+                  setOpen(false)
+                  navigateToHomeSection(event, targetHref)
+                }}
+              >
+                {tx(language, item.label, item.labelEn)}
+              </Link>
+            )
+          })}
           <Link
             className="mobile-nav-cta"
-            href="/#contact"
+            href={localizedHref("/تواصل-معنا", language)}
             onClick={(event) => {
               setOpen(false)
-              navigateToHomeSection(event, "/#contact")
+              navigateToHomeSection(event, localizedHref("/تواصل-معنا", language))
             }}
           >
             {tx(language, "اطلب عرض سعر", "Request a quote")}{" "}
@@ -362,14 +412,14 @@ export function HeroSection() {
           </p>
 
           <div className="hero-buttons">
-            <Link href="#services" className="btn-teal-primary group">
+            <Link href={localizedHref("/خدماتنا", language)} className="btn-teal-primary group">
               <span>{tx(language, "استكشف خدماتنا", "Explore Services")}</span>
               <span className="btn-icon-shift">
                 {isAr ? <ChevronLeft size={17} /> : <ChevronRight size={17} />}
               </span>
             </Link>
 
-            <Link href="#contact" className="btn-white-outline group">
+            <Link href={localizedHref("/تواصل-معنا", language)} className="btn-white-outline group">
               <span>{tx(language, "تواصل معنا", "Contact Us")}</span>
               <Phone size={16} className="text-[#00a899] transition-transform group-hover:scale-110" />
             </Link>
@@ -400,7 +450,60 @@ export function HeroSection() {
   )
 }
 
-// Stats Strip matching Screenshot 1
+// Animated Number Counter using Intersection Observer
+function AnimatedNumber({ value }: { value: string }) {
+  const numericPart = parseInt(value.replace(/[^0-9]/g, ""), 10) || 0
+  const suffix = value.replace(/[0-9]/g, "")
+  const [count, setCount] = useState(0)
+  const elementRef = React.useRef<HTMLSpanElement>(null)
+  const hasAnimated = React.useRef(false)
+
+  useEffect(() => {
+    const node = elementRef.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true
+          const duration = 1800
+          const startTime = performance.now()
+
+          const updateCounter = (currentTime: number) => {
+            const elapsed = currentTime - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            const easeOut = 1 - Math.pow(1 - progress, 3)
+            const currentCount = Math.floor(easeOut * numericPart)
+
+            setCount(currentCount)
+
+            if (progress < 1) {
+              requestAnimationFrame(updateCounter)
+            } else {
+              setCount(numericPart)
+            }
+          }
+
+          requestAnimationFrame(updateCounter)
+        }
+      },
+      { threshold: 0.2 }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [numericPart])
+
+  return (
+    <span ref={elementRef} className="stat-count-animated" dir="ltr">
+      {count}
+      {suffix}
+    </span>
+  )
+}
+
+// Stats Strip matching Screenshot 1 with animated counters
 export function StatsStrip() {
   const { language } = useLanguage()
 
@@ -415,7 +518,7 @@ export function StatsStrip() {
                 <Icon size={24} />
               </div>
               <strong className="stat-number" dir="ltr">
-                {stat.number}
+                <AnimatedNumber value={stat.number} />
               </strong>
               <span className="stat-label">
                 {tx(language, stat.labelAr, stat.labelEn)}
@@ -450,7 +553,7 @@ export function AboutSection() {
               )}
             </p>
 
-            <Link href="/من-نحن" className="btn-clean-outline">
+            <Link href={localizedHref("/من-نحن", language)} className="btn-clean-outline">
               <span>{tx(language, "تعرف علينا أكثر", "Learn More About Us")}</span>
               <FileText size={16} className="text-[#00a899]" />
             </Link>
@@ -493,12 +596,31 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Visual with Saudi profile and Arabic calligraphy watermark */}
+          {/* Visual with professional Saudi consultant photo and Arabic calligraphy watermark */}
           <div className="about-visual-column">
             <div className="about-calligraphy-watermark" aria-hidden="true">
               يسير
             </div>
-            <SaudiProfileGraphic className="about-profile-graphic" />
+            <div className="about-photo-wrapper">
+              <div className="about-photo-glow" />
+              <div className="about-photo-frame">
+                <Image
+                  src="/about-consultant.png"
+                  alt={tx(language, "مستشار مالي سعودي في يسير للاستشارات المهنية", "Saudi Financial Consultant at Yseer")}
+                  width={540}
+                  height={640}
+                  className="about-consultant-img"
+                  priority
+                />
+                <div className="about-photo-badge">
+                  <span className="badge-pulse-dot" />
+                  <div>
+                    <strong>{tx(language, "خبرة مهنية معتمدة", "Certified Expertise")}</strong>
+                    <small>{tx(language, "استشارات مالية وحلول محاسبية", "Financial Advisory & Accounting Solutions")}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -643,6 +765,13 @@ export function PartnersSection() {
     setActiveSlide((prev) => (prev - 1 + partners.length) % partners.length)
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % partners.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [partners.length])
+
   return (
     <section className="partners-carousel-section" id="partners">
       <div className="container">
@@ -688,10 +817,96 @@ export function PartnersSection() {
   )
 }
 
+// Custom Styled Service Select Dropdown
+export function CustomServiceSelect({
+  value,
+  onChange,
+}: {
+  value: string
+  onChange: (val: string) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const { language } = useLanguage()
+  const dropdownRef = React.useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false)
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [])
+
+  const currentService = services.find((s) => s.title === value) || services[0]
+  const CurrentIcon = currentService.icon
+
+  return (
+    <div className="custom-select-wrapper" ref={dropdownRef}>
+      <input type="hidden" name="service" value={value} />
+      <button
+        type="button"
+        className={`custom-select-trigger ${open ? "is-open" : ""}`}
+        onClick={() => setOpen(!open)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span className="trigger-content">
+          <span className="trigger-icon-box">
+            <CurrentIcon size={18} />
+          </span>
+          <span className="trigger-label">{tx(language, currentService.title, currentService.titleEn)}</span>
+        </span>
+        <ChevronDown size={17} className={`trigger-chevron ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <ul className="custom-select-dropdown" role="listbox">
+          {services.map((service) => {
+            const Icon = service.icon
+            const isSelected = service.title === value
+            return (
+              <li
+                key={service.number}
+                role="option"
+                aria-selected={isSelected}
+                className={`custom-select-option ${isSelected ? "is-selected" : ""}`}
+                onClick={() => {
+                  onChange(service.title)
+                  setOpen(false)
+                }}
+              >
+                <div className="option-inner">
+                  <span className="option-icon-box">
+                    <Icon size={18} />
+                  </span>
+                  <span className="option-title">
+                    {tx(language, service.title, service.titleEn)}
+                  </span>
+                </div>
+                {isSelected && <Check size={16} className="option-check text-[#00a899]" />}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 // Contact Us Section matching Screenshot 2
 export function ContactSection() {
   const { language } = useLanguage()
   const isAr = language === "ar"
+  const [selectedService, setSelectedService] = useState("التأسيس المالي")
   const [formSent, setFormSent] = useState(false)
   const [formError, setFormError] = useState("")
 
@@ -703,7 +918,7 @@ export function ContactSection() {
     const phone = String(form.get("phone") || "").trim()
     const email = String(form.get("email") || "").trim()
     const company = String(form.get("company") || "").trim()
-    const service = String(form.get("service") || "").trim()
+    const service = String(form.get("service") || selectedService || "التأسيس المالي").trim()
     const details = String(form.get("details") || "").trim()
 
     if (!firstName || !phone || !details) {
@@ -778,15 +993,8 @@ export function ContactSection() {
                     placeholder={tx(language, "اسم الشركة", "Company Name")}
                   />
                 </div>
-                <div className="form-field relative">
-                  <select name="service" defaultValue="التأسيس المالي" className="select-styled">
-                    {services.map((s) => (
-                      <option key={s.number} value={s.title}>
-                        {tx(language, s.title, s.titleEn)}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown size={16} className="select-chevron-icon" />
+                <div className="form-field">
+                  <CustomServiceSelect value={selectedService} onChange={setSelectedService} />
                 </div>
               </div>
 
@@ -834,13 +1042,13 @@ export function ContactSection() {
               </a>
 
               <a
-                href="https://iwtsp.com/966537177706"
+                href="https://wa.me/966537177706"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-info-item hover:opacity-80 transition-opacity"
               >
-                <span className="contact-icon-bubble">
-                  <MessageCircle size={18} />
+                <span className="contact-icon-bubble bg-[#25D366]/10 text-[#25D366]">
+                  <OfficialWhatsAppIcon size={20} />
                 </span>
                 <span className="contact-info-text font-semibold" dir="ltr">
                   +966 53 717 7706
@@ -872,8 +1080,8 @@ export function ContactSection() {
             title={tx(language, "موقع يسير للاستشارات المهنية - بريدة، القصيم", "Yseer Location Map")}
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114446.40251147553!2d43.91689255!3d26.3592472!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1581e18bf9776f87%3A0x6a05e2d19e99fb63!2sBuraydah%20Saudi%20Arabia!5e0!3m2!1sen!2ssa!4v1716500000000!5m2!1sen!2ssa"
             width="100%"
-            height="320"
-            style={{ border: 0, borderRadius: "12px" }}
+            height="290"
+            style={{ border: 0, borderRadius: "14px" }}
             allowFullScreen={false}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
@@ -884,22 +1092,28 @@ export function ContactSection() {
   )
 }
 
-// Floating WhatsApp / Chat Button (shown on mobile & desktop in bottom corner)
+// Floating Official WhatsApp Button (shown on mobile & desktop in bottom corner)
 export function FloatingChat() {
   const { language } = useLanguage()
 
   return (
-    <a
-      href="https://iwtsp.com/966537177706"
-      target="_blank"
-      rel="noreferrer"
-      className="floating-chat-btn"
-      aria-label={tx(language, "تواصل عبر واتساب", "Chat on WhatsApp")}
-      title={tx(language, "تحدث معنا عبر واتساب", "Chat with us on WhatsApp")}
-    >
-      <MessageCircle size={26} />
-      <span className="floating-chat-ping" />
-    </a>
+    <div className="floating-whatsapp-container">
+      <a
+        href="https://wa.me/966537177706"
+        target="_blank"
+        rel="noreferrer"
+        className="floating-whatsapp-btn"
+        aria-label={tx(language, "تواصل عبر واتساب", "Chat on WhatsApp")}
+        title={tx(language, "تحدث معنا عبر واتساب", "Chat with us on WhatsApp")}
+      >
+        <span className="floating-whatsapp-pulse" />
+        <span className="floating-whatsapp-pulse pulse-delay" />
+        <OfficialWhatsAppIcon size={32} className="floating-whatsapp-icon" />
+        <span className="floating-whatsapp-label">
+          {tx(language, "تواصل معنا", "Chat with us")}
+        </span>
+      </a>
+    </div>
   )
 }
 
@@ -913,10 +1127,10 @@ export function SiteFooter() {
           <div className="footer-brand">
             <Link
               className="brand brand-light"
-              href="/"
+              href={localizedHref("/", language)}
               aria-label={tx(language, "يسير للاستشارات المهنية", "Yseer Professional Consulting")}
             >
-              <Image src="/yseer-logo.png" alt="يسير للاستشارات المهنية" width={160} height={60} />
+              <BrandLogo language={language} isFooter />
             </Link>
             <p>
               {tx(
@@ -930,7 +1144,7 @@ export function SiteFooter() {
           <div className="footer-links">
             <h3>{tx(language, "روابط سريعة", "Quick links")}</h3>
             {navItems.slice(1).map((item) => (
-              <Link key={item.href} href={item.href} onClick={(event) => navigateToHomeSection(event, item.href)}>
+              <Link key={item.href} href={localizedHref(item.href, language)}>
                 {tx(language, item.label, item.labelEn)}
               </Link>
             ))}
@@ -958,8 +1172,7 @@ export function SiteFooter() {
             <p>{tx(language, "8:00 ص – 4:00 م", "8:00 AM – 4:00 PM")}</p>
             <Link
               className="footer-contact-cta"
-              href="/#contact"
-              onClick={(event) => navigateToHomeSection(event, "/#contact")}
+              href={localizedHref("/تواصل-معنا", language)}
             >
               {tx(language, "اطلب عرض سعر", "Request a quote")}{" "}
               {language === "ar" ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}

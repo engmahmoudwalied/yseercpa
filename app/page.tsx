@@ -9,7 +9,6 @@ import {
   WhySection,
   PartnersSection,
   ContactSection,
-  FloatingChat,
 } from "@/components/site"
 
 export default function HomePage() {
@@ -38,9 +37,6 @@ export default function HomePage() {
 
       {/* 8. Contact Us ("تواصل معنا") with quote form and location map */}
       <ContactSection />
-
-      {/* 9. Floating WhatsApp chat button */}
-      <FloatingChat />
     </main>
   )
 }

@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { IBM_Plex_Sans_Arabic, Inter } from 'next/font/google'
 import { LanguageProvider } from '@/components/language-provider'
-import { SiteFooter, SiteHeader } from '@/components/site'
+import { FloatingChat, SiteFooter, SiteHeader } from '@/components/site'
 import './globals.css'
 
 const arabicFont = IBM_Plex_Sans_Arabic({ subsets: ['arabic'], weight: ['400', '500', '600', '700'], display: 'swap', variable: '--font-arabic' })
@@ -108,6 +108,7 @@ export default function RootLayout({
         <LanguageProvider>
           <SiteHeader />
           {children}
+          <FloatingChat />
           <SiteFooter />
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </LanguageProvider>
