@@ -47,6 +47,10 @@ import {
   YseerEmblemGraphic,
   LogoLamshNorah,
   LogoAlTabtabaei,
+  LogoAfaq,
+  LogoAlRoaya,
+  LogoTamkeen,
+  LogoAlSarh,
   SaudiProfileGraphic,
   OfficialWhatsAppIcon,
 } from "@/components/icons"
@@ -747,70 +751,49 @@ export function WhySection() {
   )
 }
 
-// Partners in Success matching Screenshot 2 with carousel
+// Partners in Success matching Screenshot 2 with continuous animated marquee carousel
 export function PartnersSection() {
   const { language } = useLanguage()
-  const [activeSlide, setActiveSlide] = useState(0)
 
   const partners = [
     { id: 1, name: "LAMSH NORAH", component: LogoLamshNorah },
     { id: 2, name: "أولاد عبد الجليل يوسف الطبطبائي", component: LogoAlTabtabaei },
+    { id: 3, name: "شركة آفاق المالية", component: LogoAfaq },
+    { id: 4, name: "مجموعة الرؤية للاستثمار", component: LogoAlRoaya },
+    { id: 5, name: "شركة تمكين القابضة", component: LogoTamkeen },
+    { id: 6, name: "مؤسسة الصرح للتجارة", component: LogoAlSarh },
   ]
-
-  function nextSlide() {
-    setActiveSlide((prev) => (prev + 1) % partners.length)
-  }
-
-  function prevSlide() {
-    setActiveSlide((prev) => (prev - 1 + partners.length) % partners.length)
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % partners.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [partners.length])
 
   return (
     <section className="partners-carousel-section" id="partners">
       <div className="container">
-        <h2 className="section-title-clean text-center mb-10">
-          {tx(language, "شركاؤنا في النجاح", "Our Partners in Success")}
-        </h2>
+        <div className="partners-header-wrap">
+          <h2 className="section-title-clean text-center mb-3">
+            {tx(language, "شركاؤنا في النجاح", "Our Partners in Success")}
+          </h2>
+          <p className="partners-subtitle-text text-center">
+            {tx(
+              language,
+              "شراكات مهنية استراتيجية قائمة على الثقة وتحقيق الأثر المالي المستدام",
+              "Strategic professional partnerships built on trust and sustainable financial impact"
+            )}
+          </p>
+        </div>
 
-        <div className="partners-slider-wrapper">
-          <button
-            onClick={prevSlide}
-            className="slider-arrow-btn"
-            aria-label={tx(language, "الشريك السابق", "Previous Partner")}
-          >
-            {language === "ar" ? <ChevronRight size={22} /> : <ChevronLeft size={22} />}
-          </button>
-
-          <div className="partners-display-area">
-            {partners.map((partner, index) => {
+        {/* Continuous Animated Infinite Marquee Track */}
+        <div className="partners-marquee-container" dir="ltr">
+          <div className="partners-marquee-fade-left" aria-hidden="true" />
+          <div className="partners-marquee-fade-right" aria-hidden="true" />
+          <div className="partners-marquee-track">
+            {[...partners, ...partners, ...partners].map((partner, index) => {
               const Comp = partner.component
               return (
-                <div
-                  key={partner.id}
-                  className={`partner-logo-item transition-all duration-300 ${
-                    index === activeSlide ? "flex opacity-100 scale-100" : "hidden md:flex opacity-100 scale-100"
-                  }`}
-                >
+                <div key={`${partner.id}-${index}`} className="partner-marquee-card">
                   <Comp />
                 </div>
               )
             })}
           </div>
-
-          <button
-            onClick={nextSlide}
-            className="slider-arrow-btn"
-            aria-label={tx(language, "الشريك التالي", "Next Partner")}
-          >
-            {language === "ar" ? <ChevronLeft size={22} /> : <ChevronRight size={22} />}
-          </button>
         </div>
       </div>
     </section>
@@ -1106,11 +1089,11 @@ export function FloatingChat() {
         aria-label={tx(language, "تواصل عبر واتساب", "Chat on WhatsApp")}
         title={tx(language, "تحدث معنا عبر واتساب", "Chat with us on WhatsApp")}
       >
-        <span className="floating-whatsapp-pulse" />
-        <span className="floating-whatsapp-pulse pulse-delay" />
-        <OfficialWhatsAppIcon size={32} className="floating-whatsapp-icon" />
+        <div className="floating-whatsapp-icon-wrap">
+          <OfficialWhatsAppIcon size={30} />
+        </div>
         <span className="floating-whatsapp-label">
-          {tx(language, "تواصل معنا", "Chat with us")}
+          {tx(language, "تواصل عبر واتساب", "Chat on WhatsApp")}
         </span>
       </a>
     </div>

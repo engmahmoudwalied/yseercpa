@@ -107,7 +107,9 @@ export default function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema).replace(/</g, '\\u003c') }} />
         <LanguageProvider>
           <SiteHeader />
-          {children}
+          <div className="site-content-wrapper">
+            {children}
+          </div>
           <FloatingChat />
           <SiteFooter />
           {process.env.NODE_ENV === 'production' && <Analytics />}

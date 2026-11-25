@@ -407,6 +407,67 @@ export function LogoAlTabtabaei({ className = "" }: { className?: string }) {
   )
 }
 
+// Partner Logo 3: آفاق المالية
+export function LogoAfaq({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center text-center ${className}`}>
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
+        <path d="M12 36L24 12L36 36M18 28H30" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="24" cy="18" r="3" fill="currentColor" />
+      </svg>
+      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
+        شركة آفاق المالية
+      </span>
+    </div>
+  )
+}
+
+// Partner Logo 4: مجموعة الرؤية
+export function LogoAlRoaya({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center text-center ${className}`}>
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
+        <circle cx="24" cy="24" r="16" strokeWidth="2" strokeDasharray="4 2" />
+        <path d="M16 24C18 20 22 17 26 19C30 21 32 25 32 28" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="24" cy="24" r="4" fill="currentColor" />
+      </svg>
+      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
+        مجموعة الرؤية للاستثمار
+      </span>
+    </div>
+  )
+}
+
+// Partner Logo 5: تمكين القابضة
+export function LogoTamkeen({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center text-center ${className}`}>
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
+        <path d="M14 34V14L34 24L14 34Z" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M22 18L30 22" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
+        شركة تمكين القابضة
+      </span>
+    </div>
+  )
+}
+
+// Partner Logo 6: مؤسسة الصرح الوطنية
+export function LogoAlSarh({ className = "" }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center text-center ${className}`}>
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
+        <path d="M12 36V22L24 12L36 22V36H12Z" strokeWidth="2" strokeLinejoin="round" />
+        <rect x="20" y="24" width="8" height="12" strokeWidth="1.5" />
+      </svg>
+      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
+        مؤسسة الصرح للتجارة
+      </span>
+    </div>
+  )
+}
+
 // Saudi profile silhouette with aura for About section (Screenshot 1)
 export function SaudiProfileGraphic({ className = "" }: { className?: string }) {
   return (
@@ -439,19 +500,19 @@ export function SaudiProfileGraphic({ className = "" }: { className?: string }) 
   )
 }
 
-
-// Official WhatsApp Vector Icon
+// Official WhatsApp Vector Icon (Standard authentic WhatsApp icon)
 export function OfficialWhatsAppIcon({ size = 28, className = "" }: { size?: number; className?: string }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 32 32"
+      viewBox="0 0 24 24"
       fill="currentColor"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M16.002 2C8.28 2 2 8.275 2 15.992c0 2.65.74 5.21 2.146 7.425L2.34 30.015l6.786-1.78a13.92 13.92 0 0 0 6.876 1.802h.006c7.72 0 14-6.275 14-13.993 0-3.74-1.454-7.252-4.1-9.897C23.262 3.498 19.746 2 16.002 2zm8.17 19.98c-.34.957-1.71 1.76-2.38 1.884-.63.115-1.44.164-4.24-.997-3.57-1.478-5.88-5.116-6.06-5.353-.18-.236-1.45-1.928-1.45-3.677 0-1.75.91-2.61 1.23-2.966.32-.355.7-.444.93-.444.24 0 .47.002.68.012.22.01.52-.084.81.614.3.71 1.03 2.508 1.12 2.69.09.183.15.4.03.636-.12.237-.18.385-.36.593-.18.207-.37.46-.53.62-.18.176-.37.37-.16.726.21.355.93 1.536 2 2.488 1.38 1.226 2.54 1.608 2.9 1.785.36.177.57.148.78-.09.21-.236.9-.1.05 1.14-1.38.24-.28.48-.236.81-.118.33.118 2.08.98 2.44 1.157.36.178.6.266.69.414.09.148.09.858-.25 1.815z" />
+      <path d="M17.472 14.382c-.301-.15-1.774-.875-2.049-.975-.275-.1-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-.3-.15-1.267-.467-2.413-1.488-.893-.796-1.496-1.78-1.671-2.08-.175-.3-.019-.462.131-.611.135-.134.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.583-.493-.504-.675-.513l-.575-.01c-.2 0-.525.075-.8.375s-1.05 1.025-1.05 2.5 1.075 2.9 1.225 3.1c.15.2 2.116 3.231 5.127 4.531.716.31 1.275.495 1.71.634.719.229 1.373.197 1.89.12.578-.087 1.774-.725 2.024-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z" />
+      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.98-1.392A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2a8.163 8.163 0 01-4.24-1.183l-.304-.18-2.957.827.84-2.885-.198-.315A8.164 8.164 0 013.8 12c0-4.529 3.671-8.2 8.2-8.2 4.529 0 8.2 3.671 8.2 8.2 0 4.529-3.671 8.2-8.2 8.2z" />
     </svg>
   )
 }
