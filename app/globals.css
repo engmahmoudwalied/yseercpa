@@ -739,6 +739,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   font-size: 13.5px !important;
   font-weight: 700 !important;
   text-decoration: none !important;
+  white-space: nowrap !important;
+  width: auto !important;
+  max-width: fit-content !important;
   box-shadow: 0 4px 16px rgba(0, 168, 153, 0.35) !important;
   transition: all 0.25s ease !important;
 }
@@ -2775,4 +2778,95 @@ html[dir="ltr"] .btn-teal-primary:hover .btn-icon-shift {
 [data-theme="dark"] .faq-bottom-cta {
   background: linear-gradient(135deg, #072421 0%, #103833 100%);
   border: 1px solid #1e3c38;
+}
+
+/* =========================================================
+   Fixes for Hero Second Line, Partner Logos & Mobile Layout
+   ========================================================= */
+
+/* 1. Hero Title Second Line in Dark Mode */
+.hero-title-second-line {
+  color: #183b39;
+  transition: color 0.25s ease;
+}
+
+:root[data-theme="dark"] .hero-title-second-line,
+[data-theme="dark"] .hero-title-second-line,
+.dark .hero-title-second-line {
+  color: #e5f1ef !important;
+}
+
+/* 2. Partner Marquee Logo & Label High Contrast in Dark Mode */
+.partner-marquee-card svg {
+  color: #023632;
+  transition: color 0.2s ease;
+}
+
+:root[data-theme="dark"] .partner-marquee-card svg,
+[data-theme="dark"] .partner-marquee-card svg,
+.dark .partner-marquee-card svg {
+  color: #00c0ae !important;
+  stroke: #00c0ae;
+}
+
+.partner-logo-label {
+  color: #183b39;
+  font-weight: 600;
+  font-size: 11.5px;
+  line-height: 1.25;
+  margin-top: 6px;
+  max-width: 150px;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+:root[data-theme="dark"] .partner-logo-label,
+[data-theme="dark"] .partner-logo-label,
+.dark .partner-logo-label {
+  color: #ffffff !important;
+}
+
+/* 3. Form Input Text Alignment (Right-aligned in RTL, Left-aligned in LTR) */
+html[dir="rtl"] .contact-form input,
+html[dir="rtl"] .quote-form input,
+html[dir="rtl"] .form-field input,
+html[lang="ar"] .contact-form input,
+html[lang="ar"] .quote-form input,
+html[lang="ar"] .form-field input {
+  text-align: right !important;
+}
+
+html[dir="ltr"] .contact-form input,
+html[dir="ltr"] .quote-form input,
+html[dir="ltr"] .form-field input,
+html[lang="en"] .contact-form input,
+html[lang="en"] .quote-form input,
+html[lang="en"] .form-field input {
+  text-align: left !important;
+}
+
+/* 4. Footer CTA Inline on Mobile (No Wrapping) */
+@media (max-width: 640px) {
+  .site-footer .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 18px;
+  }
+
+  .site-footer .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .site-footer .footer-hours {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+  }
+
+  .site-footer .footer-hours .footer-contact-cta,
+  .site-footer .footer-contact-cta {
+    display: inline-flex !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    max-width: fit-content !important;
+    padding: 11px 22px !important;
+  }
 }

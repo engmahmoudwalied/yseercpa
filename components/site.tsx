@@ -282,12 +282,22 @@ export function SiteHeader() {
     const saved = localStorage.getItem("yseer-theme") as "light" | "dark" | null
     const initial = saved || (isDark ? "dark" : "light")
     document.documentElement.dataset.theme = initial
+    if (initial === "dark") {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
     setTheme(initial)
   }, [])
 
   function toggleTheme() {
     const nextTheme = theme === "dark" ? "light" : "dark"
     document.documentElement.dataset.theme = nextTheme
+    if (nextTheme === "dark") {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
     localStorage.setItem("yseer-theme", nextTheme)
     setTheme(nextTheme)
   }
@@ -387,7 +397,7 @@ export function HeroSection() {
         <div className="hero-text-side">
           <h1 className="hero-title-main">
             {tx(language, "نجاح أعمالك", "Your Business Success")}{" "}
-            <span className="block text-[#183b39] dark:text-[#e5f1ef]">
+            <span className="hero-title-second-line block">
               {tx(language, "يبدأ من وضوح أرقامك", "Starts With Clear Numbers")}
             </span>
           </h1>
@@ -867,7 +877,7 @@ export function PartnersSection() {
               const Comp = partner.component
               return (
                 <div key={`${partner.id}-${index}`} className="partner-marquee-card">
-                  <Comp />
+                  <Comp language={language} />
                 </div>
               )
             })}
@@ -1161,8 +1171,8 @@ export function ContactSection() {
                     required
                     placeholder={tx(language, "رقم الهاتف", "Phone Number")}
                     autoComplete="tel"
-                    dir="ltr"
-                    className="text-start"
+                    dir={isAr ? "rtl" : "ltr"}
+                    className="phone-field-input"
                   />
                 </div>
                 <div className="form-field">
@@ -1475,7 +1485,8 @@ export function ContactForm({ hiring = false }: { hiring?: boolean }) {
             type="tel"
             autoComplete="tel"
             placeholder={tx(language, "05xxxxxxxx", "+966 5X XXX XXXX")}
-            dir="ltr"
+            dir={language === "ar" ? "rtl" : "ltr"}
+            className="phone-field-input"
           />
         </label>
         {hiring ? (

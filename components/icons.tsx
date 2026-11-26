@@ -365,7 +365,7 @@ export function YseerEmblemGraphic({ className = "" }: { className?: string }) {
 
 
 // Partner Logo 1: LAMSH NORAH
-export function LogoLamshNorah({ className = "" }: { className?: string }) {
+export function LogoLamshNorah({ className = "", language = "ar" }: { className?: string; language?: "ar" | "en" }) {
   return (
     <div className={`flex flex-col items-center justify-center ${className}`}>
       <svg width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor">
@@ -383,7 +383,7 @@ export function LogoLamshNorah({ className = "" }: { className?: string }) {
         />
         <circle cx="38" cy="22" r="2" fill="currentColor" />
       </svg>
-      <span className="font-bold text-[13px] tracking-[0.2em] mt-1 uppercase text-[#183b39] dark:text-white">
+      <span className="partner-logo-label font-bold text-[13px] tracking-[0.2em] uppercase">
         LAMSH NORAH
       </span>
     </div>
@@ -391,7 +391,7 @@ export function LogoLamshNorah({ className = "" }: { className?: string }) {
 }
 
 // Partner Logo 2: أولاد عبد الجليل يوسف الطبطبائي
-export function LogoAlTabtabaei({ className = "" }: { className?: string }) {
+export function LogoAlTabtabaei({ className = "", language = "ar" }: { className?: string; language?: "ar" | "en" }) {
   return (
     <div className={`flex flex-col items-center justify-center text-center ${className}`}>
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
@@ -400,30 +400,30 @@ export function LogoAlTabtabaei({ className = "" }: { className?: string }) {
         <rect x="14" y="14" width="20" height="20" rx="2" strokeWidth="1.5" />
         <circle cx="24" cy="24" r="4" fill="currentColor" />
       </svg>
-      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
-        أولاد عبد الجليل يوسف الطبطبائي
+      <span className="partner-logo-label">
+        {language === "en" ? "Al Tabtabaei Sons" : "أولاد عبد الجليل يوسف الطبطبائي"}
       </span>
     </div>
   )
 }
 
 // Partner Logo 3: آفاق المالية
-export function LogoAfaq({ className = "" }: { className?: string }) {
+export function LogoAfaq({ className = "", language = "ar" }: { className?: string; language?: "ar" | "en" }) {
   return (
     <div className={`flex flex-col items-center justify-center text-center ${className}`}>
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
         <path d="M12 36L24 12L36 36M18 28H30" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
         <circle cx="24" cy="18" r="3" fill="currentColor" />
       </svg>
-      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
-        شركة آفاق المالية
+      <span className="partner-logo-label">
+        {language === "en" ? "Afaq Financial Co." : "شركة آفاق المالية"}
       </span>
     </div>
   )
 }
 
 // Partner Logo 4: مجموعة الرؤية
-export function LogoAlRoaya({ className = "" }: { className?: string }) {
+export function LogoAlRoaya({ className = "", language = "ar" }: { className?: string; language?: "ar" | "en" }) {
   return (
     <div className={`flex flex-col items-center justify-center text-center ${className}`}>
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
@@ -431,38 +431,38 @@ export function LogoAlRoaya({ className = "" }: { className?: string }) {
         <path d="M16 24C18 20 22 17 26 19C30 21 32 25 32 28" strokeWidth="2" strokeLinecap="round" />
         <circle cx="24" cy="24" r="4" fill="currentColor" />
       </svg>
-      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
-        مجموعة الرؤية للاستثمار
+      <span className="partner-logo-label">
+        {language === "en" ? "Al Roaya Investment" : "مجموعة الرؤية للاستثمار"}
       </span>
     </div>
   )
 }
 
 // Partner Logo 5: تمكين القابضة
-export function LogoTamkeen({ className = "" }: { className?: string }) {
+export function LogoTamkeen({ className = "", language = "ar" }: { className?: string; language?: "ar" | "en" }) {
   return (
     <div className={`flex flex-col items-center justify-center text-center ${className}`}>
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
         <path d="M14 34V14L34 24L14 34Z" strokeWidth="2" strokeLinejoin="round" />
         <path d="M22 18L30 22" strokeWidth="2" strokeLinecap="round" />
       </svg>
-      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
-        شركة تمكين القابضة
+      <span className="partner-logo-label">
+        {language === "en" ? "Tamkeen Holding Co." : "شركة تمكين القابضة"}
       </span>
     </div>
   )
 }
 
 // Partner Logo 6: مؤسسة الصرح الوطنية
-export function LogoAlSarh({ className = "" }: { className?: string }) {
+export function LogoAlSarh({ className = "", language = "ar" }: { className?: string; language?: "ar" | "en" }) {
   return (
     <div className={`flex flex-col items-center justify-center text-center ${className}`}>
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor">
         <path d="M12 36V22L24 12L36 22V36H12Z" strokeWidth="2" strokeLinejoin="round" />
         <rect x="20" y="24" width="8" height="12" strokeWidth="1.5" />
       </svg>
-      <span className="font-semibold text-[11px] leading-tight mt-1 text-[#183b39] dark:text-white max-w-[150px]">
-        مؤسسة الصرح للتجارة
+      <span className="partner-logo-label">
+        {language === "en" ? "Al Sarh Trading Est." : "مؤسسة الصرح للتجارة"}
       </span>
     </div>
   )
