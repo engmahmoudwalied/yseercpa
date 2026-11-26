@@ -9,6 +9,7 @@ import {
   ArrowLeft,
   ArrowRight,
   BadgeCheck,
+  Building2,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -302,22 +303,6 @@ export function SiteHeader() {
           <BrandLogo language={language} />
         </Link>
 
-        {/* Social media icons on header as in screenshot */}
-        <div className="header-socials" aria-label={tx(language, "حسابات التواصل الاجتماعي", "Social Media Accounts")}>
-          {socialLinks.map(({ label, labelEn, href, icon: IconComponent }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={tx(language, label, labelEn)}
-              target="_blank"
-              rel="noreferrer"
-              className="social-pill"
-            >
-              <IconComponent size={15} />
-            </a>
-          ))}
-        </div>
-
         {/* Navigation links */}
         <nav
           className={open ? "main-nav is-open" : "main-nav"}
@@ -530,6 +515,99 @@ export function StatsStrip() {
             </div>
           )
         })}
+      </div>
+    </section>
+  )
+}
+
+// Accreditations & Licenses Strip
+export function AccreditationStrip() {
+  const { language } = useLanguage()
+  const accreditations = [
+    {
+      id: "socpa",
+      nameAr: "الهيئة السعودية للمراجعين والمحاسبين (SOCPA)",
+      nameEn: "Saudi Organization for CPAs (SOCPA)",
+      badgeAr: "محاسبون قانونيون مرخصون",
+      badgeEn: "Licensed CPAs",
+      descAr: "ترخيص مهني معتمد للمراجعة والتدقيق المالي وإصدار القوائم المعتمدة",
+      descEn: "Independent certified audit & assurance license",
+      icon: BadgeCheck,
+    },
+    {
+      id: "zatca",
+      nameAr: "هيئة الزكاة والضريبة والجمارك (ZATCA)",
+      nameEn: "Zakat, Tax & Customs Authority (ZATCA)",
+      badgeAr: "ممارسون ووكلاء معتمدون",
+      badgeEn: "Certified Tax Practitioners",
+      descAr: "تمثيل نظامي معتمد وامتثال شامل للمرحلة الثانية للفوترة الإلكترونية",
+      descEn: "Authorized representation & Phase 2 e-Invoicing compliance",
+      icon: ShieldCheck,
+    },
+    {
+      id: "ifrs",
+      nameAr: "معايير التقارير المالية الدولية (IFRS)",
+      nameEn: "International Financial Reporting (IFRS)",
+      badgeAr: "مطابقة للمعايير المعتمدة",
+      badgeEn: "Full IFRS Compliance",
+      descAr: "إعداد ومراجعة القوائم المالية وفق أحدث المعايير الدولية المعتمدة بالمملكة",
+      descEn: "Financial reporting strictly aligned with KSA endorsed IFRS",
+      icon: FileCheck2,
+    },
+    {
+      id: "mc",
+      nameAr: "وزارة التجارة السعودية",
+      nameEn: "Saudi Ministry of Commerce",
+      badgeAr: "شركة مهنية مرخصة",
+      badgeEn: "Licensed Professional Co.",
+      descAr: "سجل مهني ساري ومعتمد لمزاولة الاستشارات والخدمات المحاسبية",
+      descEn: "Official commercial registration for professional practice",
+      icon: Building2,
+    },
+  ]
+
+  return (
+    <section className="accreditation-strip" aria-label={tx(language, "الاعتمادات والتراخيص المهنية", "Professional Accreditations")}>
+      <div className="container">
+        <div className="accreditation-header">
+          <span className="eyebrow">
+            <i /> {tx(language, "الموثوقية والامتثال", "Trust & Compliance")}
+          </span>
+          <h2 className="accreditation-title">
+            {tx(language, "اعتمادات مهنية وتراخيص رسمية تعزز ثقة أعمالك", "Accreditations & Official Licenses You Can Trust")}
+          </h2>
+          <p className="accreditation-subtitle">
+            {tx(
+              language,
+              "نمارس أعمالنا وخدماتنا المهنية وفق أعلى المعايير التنظيمية والرقابية الصادرة عن الهيئات الرسمية في المملكة العربية السعودية.",
+              "We operate under the highest standards certified by regulatory and professional bodies in the Kingdom of Saudi Arabia."
+            )}
+          </p>
+        </div>
+
+        <div className="accreditation-grid">
+          {accreditations.map((item) => {
+            const Icon = item.icon
+            return (
+              <div key={item.id} className="accreditation-card">
+                <div className="accreditation-card-top">
+                  <div className="accreditation-icon-box">
+                    <Icon size={24} />
+                  </div>
+                  <span className="accreditation-badge">
+                    {tx(language, item.badgeAr, item.badgeEn)}
+                  </span>
+                </div>
+                <h3 className="accreditation-card-name">
+                  {tx(language, item.nameAr, item.nameEn)}
+                </h3>
+                <p className="accreditation-card-desc">
+                  {tx(language, item.descAr, item.descEn)}
+                </p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
@@ -885,6 +963,134 @@ export function CustomServiceSelect({
   )
 }
 
+// Frequently Asked Questions (FAQ) Section
+export function FaqSection() {
+  const { language } = useLanguage()
+  const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  const faqs = [
+    {
+      qAr: "متى تكون المنشأة ملزمة نظامًا بتعيين مراجع حسابات قانوني؟",
+      qEn: "When is a company legally required to appoint a certified auditor?",
+      aAr: "وفقًا لنظام الشركات واللوائح المعمول بها في المملكة، تلتزم الشركات المساهمة، والشركات ذات المسؤولية المحدودة التي تتجاوز المعايير النظامية (مثل حجم رأس المال أو الإيرادات السنوية أو عدد العاملين)، وكذلك المنشآت التي تتطلب جهات التمويل أو المناقصات الحكومية فحص قوائمها، بتعيين مراجع حسابات قانوني مرخص ومستقل لإصدار القوائم المالية المدققة.",
+      aEn: "Under the Saudi Companies Law and regulatory frameworks, joint-stock companies, LLCs exceeding statutory thresholds (in capital, revenue, or headcount), and entities seeking bank financing or government tenders are legally required to appoint an independent certified public accountant (CPA) to audit and issue audited financial statements.",
+    },
+    {
+      qAr: "ما الفرق الأساسي بين مسك الدفاتر والمراجعة والتدقيق المالي؟",
+      qEn: "What is the key difference between bookkeeping and statutory auditing?",
+      aAr: "مسك الدفاتر يركز على التسجيل اليومي للمعاملات المالية، والقيود المحاسبية، ومطابقة الحسابات البنكية، وإعداد موازين المراجعة الدورية. أما المراجعة والتدقيق القانوني فهي عملية فحص وتحقق مستقلة ومحايدة لتلك القوائم للتأكد من عدالتها وخلوها من الأخطاء الجوهرية ومطابقتها لمعايير المحاسبة الدولية (IFRS).",
+      aEn: "Bookkeeping focuses on day-to-day transaction recording, journal entries, bank reconciliations, and periodic trial balances. Statutory auditing, on the other hand, is an independent, objective evaluation of these financial statements to verify fairness, compliance with IFRS, and absence of material misstatements.",
+    },
+    {
+      qAr: "كيف تسهم يسير في حماية منشأتي من الغرامات الزكوية والضريبية؟",
+      qEn: "How does Yseer protect my business from Zakat and Tax penalties?",
+      aAr: "نقوم بإجراء فحص ومطابقة شاملة لكافة الفواتير والمستندات قبل رفع الإقرارات لضمان سلامة العمليات المحاسبية، مع الالتزام الصارم بالمواعيد النظامية المحددة من هيئة الزكاة والضريبة والجمارك (ZATCA)، وتقديم المشورة الوقائية لتجنب أي فروقات فحص أو غرامات تأخير أو تعديل.",
+      aEn: "We conduct a thorough pre-audit reconciliation of invoices and records before submission to ensure complete tax accuracy. By strictly adhering to ZATCA deadlines and providing proactive advisory, we help prevent late-filing fines, inspection variances, and unexpected assessments.",
+    },
+    {
+      qAr: "هل تقدم يسير الدعم لمرحلة الربط والتكامل في الفوترة الإلكترونية (ZATCA)؟",
+      qEn: "Do you support ZATCA E-Invoicing Phase 2 (Integration & Linking)?",
+      aAr: "نعم، نقدم استشارات متخصصة لمراجعة مدى جاهزية الأنظمة والبرامج المحاسبية لدى المنشأة للربط المباشر مع منصة 'فاتورة' التابعة للهيئة، والتحقق من استيفاء المتطلبات الفنية والضريبية وقوالب الفواتير (XML/CSID) وتدريب فريقك المالي لضمان استمرارية الأعمال دون عوائق.",
+      aEn: "Yes, we provide specialized advisory to assess your accounting software's readiness for direct API integration with ZATCA's FATOORA platform, verifying technical compliance, XML/CSID specifications, and training your financial team for smooth, uninterrupted operations.",
+    },
+    {
+      qAr: "هل تقدم يسير خدماتها في كافة مدن ومناطق المملكة أم في القصيم فقط؟",
+      qEn: "Does Yseer serve clients across all Saudi regions or only Al Qassim?",
+      aAr: "مقرنا الرئيسي في القصيم (بريدة)، ولكننا نخدم منشآت وشركات في جميع مناطق ومدن المملكة، بما في ذلك الرياض، جدة، الدمام، والمدينة المنورة. نعتمد منظومة عمل رقمية آمنة تتيح التواصل ومشاركة المستندات بسلاسة مع إمكانية الزيارات الميدانية عند الحاجة.",
+      aEn: "While our headquarters is in Al Qassim (Buraydah), we proudly serve businesses across the entire Kingdom, including Riyadh, Jeddah, Dammam, and Madinah, via secure digital cloud collaboration, complemented by on-site field visits whenever required.",
+    },
+    {
+      qAr: "كيف يمكننا بدء التعاقد أو الحصول على استشارة وعرض سعر مخصص؟",
+      qEn: "How can we get started or request a tailored consultation and quote?",
+      aAr: "بكل بساطة يمكنك الضغط على زر 'اطلب عرض سعر' أو التواصل معنا مباشرة عبر الواتساب أو الهاتف (920031899). سيتواصل معك أحد مستشارينا الماليين لفهم حجم ونشاط منشأتك بدقة وتقديم خطة عمل وعرض سعر مخصص يلبي احتياجك خلال يوم عمل واحد.",
+      aEn: "Simply click 'Request a Quote' or contact us directly via WhatsApp or phone (920031899). One of our senior advisors will connect with you to review your company's scope and provide a tailored proposal and transparent quotation within one business day.",
+    },
+  ]
+
+  function toggleItem(index: number) {
+    setOpenIndex(openIndex === index ? null : index)
+  }
+
+  return (
+    <section className="faq-section" id="faq" aria-label={tx(language, "الأسئلة الشائعة", "Frequently Asked Questions")}>
+      <div className="container">
+        <div className="faq-header-wrap">
+          <span className="eyebrow">
+            <i /> {tx(language, "الأسئلة الشائعة", "Frequently Asked Questions")}
+          </span>
+          <h2 className="section-title-clean">
+            {tx(language, "إجابات واضحة لقرارات واثقة", "Clear Answers for Confident Decisions")}
+          </h2>
+          <p className="faq-subtitle-text">
+            {tx(
+              language,
+              "إليك إجابات أبرز الأسئلة المتكررة حول الخدمات المحاسبية والمراجعة والامتثال الزكوي والضريبي في المملكة.",
+              "Here are answers to common questions regarding accounting, auditing, and Zakat/tax compliance in Saudi Arabia."
+            )}
+          </p>
+        </div>
+
+        <div className="faq-accordion-container">
+          {faqs.map((faq, idx) => {
+            const isOpen = openIndex === idx
+            return (
+              <div
+                key={faq.qAr}
+                className={`faq-item-card ${isOpen ? "is-expanded" : ""}`}
+              >
+                <button
+                  type="button"
+                  className="faq-question-btn"
+                  onClick={() => toggleItem(idx)}
+                  aria-expanded={isOpen}
+                >
+                  <span className="faq-question-text">
+                    {tx(language, faq.qAr, faq.qEn)}
+                  </span>
+                  <span className={`faq-icon-arrow ${isOpen ? "is-open" : ""}`}>
+                    <ChevronDown size={20} />
+                  </span>
+                </button>
+                {isOpen && (
+                  <div className="faq-answer-content">
+                    <p>{tx(language, faq.aAr, faq.aEn)}</p>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+        {/* CTA Strip under FAQ */}
+        <div className="faq-bottom-cta">
+          <div className="faq-bottom-cta-text">
+            <h4>{tx(language, "هل لديك استفسار محدد حول منشأتك؟", "Have a specific question about your business?")}</h4>
+            <p>{tx(language, "فريقنا المتخصص من المحاسبين والمستشارين متاح للإجابة على جميع تساؤلاتك بدقة وسرية.", "Our specialized team of CPAs and advisors is ready to answer all your inquiries with precision and confidentiality.")}</p>
+          </div>
+          <div className="faq-bottom-cta-buttons">
+            <a
+              href="https://wa.me/966537177706"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-faq-whatsapp"
+            >
+              <span>{tx(language, "تحدث مع مستشار عبر واتساب", "Chat with Advisor on WhatsApp")}</span>
+              <OfficialWhatsAppIcon size={20} />
+            </a>
+            <Link
+              href={localizedHref("/تواصل-معنا", language)}
+              className="btn-faq-contact"
+            >
+              <span>{tx(language, "طلب استشارة مجانية", "Request Free Consultation")}</span>
+              {language === "ar" ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // Contact Us Section matching Screenshot 2
 export function ContactSection() {
   const { language } = useLanguage()
@@ -1122,6 +1328,21 @@ export function SiteFooter() {
                 "Your business success begins with clear numbers. Your trusted partner for sustainable growth."
               )}
             </p>
+            {/* Social media icons in footer */}
+            <div className="footer-socials" aria-label={tx(language, "حسابات التواصل الاجتماعي", "Social Media Accounts")}>
+              {socialLinks.map(({ label, labelEn, href, icon: IconComponent }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={tx(language, label, labelEn)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer-social-pill"
+                >
+                  <IconComponent size={16} />
+                </a>
+              ))}
+            </div>
           </div>
 
           <div className="footer-links">
@@ -1195,7 +1416,7 @@ export function SectionHeading({
       <span className="eyebrow">
         <i /> {eyebrow}
       </span>
-      <h2>{title}</h2>
+      <h2 className="section-heading-title">{title}</h2>
       {description && <p>{description}</p>}
     </div>
   )
@@ -1341,10 +1562,10 @@ export function PageHero({
         <span className="eyebrow">
           <i /> {eyebrow}
         </span>
-        <h1>{title}</h1>
-        <p>{description}</p>
+        <h1 className="page-hero-title">{title}</h1>
+        <p className="page-hero-desc">{description}</p>
         <div className="breadcrumb">
-          <Link href="/">{tx(language, "الرئيسية", "Home")}</Link>
+          <Link href={localizedHref("/", language)}>{tx(language, "الرئيسية", "Home")}</Link>
           {language === "ar" ? <ArrowLeft size={14} /> : <ArrowRight size={14} />}
           <span>{eyebrow}</span>
         </div>

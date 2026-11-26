@@ -4,8 +4,10 @@ import Link from "next/link"
 import { ArrowLeft, Check, FileCheck2, Sparkles, Users } from "lucide-react"
 import {
   AboutSection,
+  AccreditationStrip,
   ContactForm,
   ContactSection,
+  FaqSection,
   PageHero,
   PartnersSection,
   SectionHeading,
@@ -49,6 +51,7 @@ export function InnerPageContent({ slug }: { slug: string }) {
         />
         <AboutSection />
         <StandardsSection />
+        <AccreditationStrip />
         <WhySection />
       </>
     )
@@ -66,6 +69,7 @@ export function InnerPageContent({ slug }: { slug: string }) {
           )}
         />
         <ServicesSection />
+        <FaqSection />
         <section className="inner-cta">
           <div className="container inner-cta-row">
             <div>
