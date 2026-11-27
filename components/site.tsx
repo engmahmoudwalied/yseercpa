@@ -253,19 +253,23 @@ export function BrandLogo({ language, isFooter = false }: { language: "ar" | "en
   }
 
   return (
-    <span className={`brand-english ${isFooter ? "brand-english-footer" : ""}`} dir="ltr">
+    <span className={`brand-english-lockup ${isFooter ? "brand-english-footer" : ""}`} dir="ltr">
+      <Image
+        className="brand-english-script"
+        src="/yseer-english-script.png"
+        alt="YSEER Professional Consulting"
+        width={108}
+        height={22}
+        priority
+      />
       <Image
         className="brand-english-symbol"
         src="/yseer-mark.png"
-        alt="Yseer Symbol"
+        alt="Yseer Emblem"
         width={38}
         height={34}
         priority
       />
-      <span className="brand-english-copy">
-        <strong>YSEER</strong>
-        <small>Professional Consulting</small>
-      </span>
     </span>
   )
 }
@@ -1582,7 +1586,7 @@ export function PageHero({
         </div>
       </div>
       <div className="page-hero-orbit" aria-hidden="true">
-        ي
+        {language === "ar" ? "يسير" : "yseer"}
       </div>
     </section>
   )

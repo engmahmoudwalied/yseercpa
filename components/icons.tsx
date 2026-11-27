@@ -1,4 +1,5 @@
 import React from "react"
+import Image from "next/image"
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number
@@ -293,72 +294,19 @@ export function IconStatsDevelopment({ size = 26, className = "" }: IconProps) {
   )
 }
 
-// Brand graphic: Interlocking Diamonds (from Screenshot 1 Hero)
+// Brand graphic: Authentic Yseer Interlocking Diamonds Emblem
 export function YseerEmblemGraphic({ className = "" }: { className?: string }) {
   return (
     <div className={`yseer-emblem-wrap ${className}`}>
-      <svg
-        viewBox="0 0 340 260"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="yseer-emblem-svg"
-      >
-        <defs>
-          <linearGradient id="emblemGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#00b7a6" />
-            <stop offset="100%" stopColor="#023632" />
-          </linearGradient>
-          <linearGradient id="emblemGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#2dd4bf" />
-            <stop offset="100%" stopColor="#00a899" />
-          </linearGradient>
-          <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="14" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-        </defs>
-
-        {/* Shadow / background layered shape */}
-        <path
-          d="M170 30 L260 120 L170 210 L80 120 Z"
-          fill="#00a899"
-          fillOpacity="0.08"
-          transform="translate(25, -5)"
-        />
-
-        {/* Left Teal Rhombus Diamond */}
-        <rect
-          x="75"
-          y="65"
-          width="110"
-          height="110"
-          rx="22"
-          transform="rotate(45 130 120)"
-          fill="url(#emblemGrad2)"
-          className="emblem-diamond-left"
-        />
-
-        {/* Right Interlocking Rhombus Diamond */}
-        <rect
-          x="155"
-          y="65"
-          width="110"
-          height="110"
-          rx="22"
-          transform="rotate(45 210 120)"
-          fill="url(#emblemGrad1)"
-          className="emblem-diamond-right"
-        />
-
-        {/* Clean central intersecting highlight wave */}
-        <path
-          d="M150 78 C 170 95, 175 145, 195 162"
-          stroke="#ffffff"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          strokeOpacity="0.9"
-        />
-      </svg>
+      <div className="hero-emblem-backdrop-glow" aria-hidden="true" />
+      <Image
+        src="/yseer-mark.png"
+        alt="شعار يسير للاستشارات المهنية"
+        width={440}
+        height={314}
+        priority
+        className="hero-emblem-img"
+      />
     </div>
   )
 }

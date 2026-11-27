@@ -1,42 +1,6 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="yseerGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00b7a6" />
-      <stop offset="100%" stop-color="#023632" />
-    </linearGradient>
-    <linearGradient id="yseerGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2dd4bf" />
-      <stop offset="100%" stop-color="#00a899" />
-    </linearGradient>
-  </defs>
-  <!-- Background rounded squircle with Yseer dark green -->
+  <!-- Official Yseer Dark Green Background Squircle -->
   <rect width="180" height="180" rx="40" fill="#023632" />
-  <!-- Left Teal Rhombus Diamond -->
-  <rect
-    x="38"
-    y="55"
-    width="52"
-    height="52"
-    rx="11"
-    transform="rotate(45 64 81)"
-    fill="url(#yseerGrad2)"
-  />
-  <!-- Right Interlocking Rhombus Diamond -->
-  <rect
-    x="78"
-    y="55"
-    width="52"
-    height="52"
-    rx="11"
-    transform="rotate(45 104 81)"
-    fill="url(#yseerGrad1)"
-  />
-  <!-- Central Intersecting Curve Accent -->
-  <path
-    d="M74 61 C 82 72, 86 100, 96 111"
-    stroke="#ffffff"
-    stroke-width="2.5"
-    stroke-linecap="round"
-    stroke-opacity="0.9"
-  />
+  <!-- Authentic Yseer Interlocking Diamond Emblem -->
+  <image href="/yseer-mark.png" x="22" y="42" width="136" height="97" />
 </svg>
